@@ -155,13 +155,10 @@ bool is_code_file(char* path, int64 path_length) {
 }
 
 char* load_file_virtual(int32 file, uint64 size) {
-	char* p = (char*)system_call(9, 0, (size+4095)&-4096, 1, 0x02, file, 0);
-	return p;
+	return (char*)system_call(9, 0, (size+4095)&-4096, 1, 0x02, file, 0);
 }
 
 #define MAX_BASE10_DIGITS 20
-
-struct DigitizeResult { char* str; int32 count; };
 
 void digitize(uint64 n, char buffer[MAX_BASE10_DIGITS], char** out_str, int64* out_count) {
 	int32 digit_count = 0;
@@ -232,6 +229,7 @@ int main(int argc, char* args[]) {
 			int64 file_size = get_file_size(file);
 			char* file_data = load_file_virtual(file, file_size);
 			uint64 loc = count_loc(file_data, file_size);
+			// file_close(file);
 			total_loc += loc;
 
 			// print_str(", loc: ");
