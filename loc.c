@@ -12,7 +12,7 @@ typedef _Bool bool;
 
 enum { false = 0, true = 1 };
 
-extern int64 system_call(int64 rax, int64 rsi, int64 rdi, int64 rdx, int64 r10, int64 r8, int64 r9);
+extern int64 system_call(int64 rax, int64 rdi, int64 rsi, int64 rdx, int64 r10, int64 r8, int64 r9);
 
 int64 string_length(char* str) {
 	char* p = str;
