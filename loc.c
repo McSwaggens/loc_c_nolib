@@ -212,6 +212,17 @@ uint64 count_loc(char* s, uint64 size) {
 	return counter;
 }
 
+enum FileType {
+	FT_UNKNOWN     = 0,
+	FT_FIFO        = 1,
+	FT_CHAR_DEVICE = 2,
+	FT_DIRECTORY   = 4,
+	FT_BLOCK       = 5,
+	FT_REGULAR     = 8,
+	FT_LINK        = 10,
+	FT_SOCKET      = 12,
+};
+
 int main(int argc, char* args[]) {
 	int32 fdir = file_open(".", OPEN_READ_ONLY | OPEN_DIRECTORY);
 
@@ -243,6 +254,9 @@ int main(int argc, char* args[]) {
 			p += entry->length;
 
 			int64 namelen = string_length(entry->name);
+
+			if (entry->type != FT_REGULAR)
+				continue;
 
 			if (!is_code_file(entry->name, namelen))
 				continue;
